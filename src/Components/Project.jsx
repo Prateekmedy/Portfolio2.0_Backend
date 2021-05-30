@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
 import { Button, TextField, IconButton } from '@material-ui/core';
 import '../Style/PortfolioPage.css';
-import Create from '@material-ui/icons/Create'
-import LockOpen from '@material-ui/icons/LockOpen'
 import AddAPhoto from '@material-ui/icons/AddAPhoto'
 import Cancel from '@material-ui/icons/Cancel'
 import Dialog from '@material-ui/core/Dialog';
@@ -27,11 +25,11 @@ export default function Project(props) {
         description : project.description
     }
 
-    if(evt.target.name == 'name'){
+    if(evt.target.name === 'name'){
         tempProject.name = evt.target.value
-    }else if(evt.target.name == 'link'){
+    }else if(evt.target.name === 'link'){
         tempProject.link = evt.target.value
-    }else if(evt.target.name == 'description'){
+    }else if(evt.target.name === 'description'){
         tempProject.description = evt.target.value
     }
       
@@ -44,7 +42,7 @@ export default function Project(props) {
 
   const handleDeleteImage = (imageType, projectName, imageNode) => {
 
-    if(imageType == 'old'){
+    if(imageType === 'old'){
         let newCurrentImages = { ...projectImages }
         delete newCurrentImages[imageNode]
 
@@ -53,7 +51,7 @@ export default function Project(props) {
         // props.handleDeleteProjectImages(projectName, imageNode, newCurrentImages)
         // console.log('delete ho gaya hai', newCurrentImages, imageNode)
         
-    }else if(imageType == 'new'){
+    }else if(imageType === 'new'){
         let newCurrentImages = { ...currentImg }
         delete newCurrentImages[imageNode]
         setCurrentImg(newCurrentImages)
@@ -93,26 +91,28 @@ export default function Project(props) {
                 <div className="project_images_container">
                     <div className="image_parent_container">
                         {   
-                            (currentImg != null) &&
+                            (currentImg !== null) &&
                                 Object.keys(currentImg).map(image => {
                                     
                                     return (
                                         <div key={image} className="image_child_container">
                                             <div className="project_image">
-                                                <img src={URL.createObjectURL(currentImg[image])} className="thumbnail_image" id="currentProjectImagePreview"/>
+                                                <img alt='' src={URL.createObjectURL(currentImg[image])} className="thumbnail_image" id="currentProjectImagePreview"/>
                                                 <Cancel className="cancelIcon" onClick={() => handleDeleteImage('new', null, currentImg[image])}/>
                                             </div>
                                         </div>
                                     ) 
                                 })
+                                
                         }
                         {
-                            (projectImages != null) &&
+                            (projectImages !== null) &&
                                 Object.keys(projectImages).map(image => {
                                     return (
                                         <div key={image} className="image_child_container">
                                             <div className="project_image">
-                                                <img src={`https://ipfs.infura.io/ipfs/${projectImages[image]}`} className="thumbnail_image" id="projectImagePreview"/>
+                                                {/* <img src={`https://ipfs.infura.io/ipfs/${projectImages[image]}`} className="thumbnail_image" id="projectImagePreview"/> */}
+                                                <img alt='' src={projectImages[image]} className="thumbnail_image" id="projectImagePreview"/>
                                                 <Cancel className="cancelIcon" onClick={() => handleDeleteImage('old', project.name, image)}/>
                                             </div>
                                         </div>
@@ -136,7 +136,7 @@ export default function Project(props) {
             </div>
             <DialogActions id="project_page_footer_icons">
                 {
-                    props.card.data.name ==  '' ?
+                    props.card.data.name ===  '' ?
                     <Button
                         autoFocus
                         variant="contained"
@@ -154,6 +154,7 @@ export default function Project(props) {
                         color="primary" 
                         className="stepper_btn"   
                         onClick={() => props.saveProject('update', project, projectImages, currentImg)}
+                        disabled={props.user === 'guest' ? true : false}
                     >
                         Update
                     </Button>

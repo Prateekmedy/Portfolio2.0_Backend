@@ -9,8 +9,8 @@ class App extends Component {
   
   
 
-  constructor(props){
-    super(props);     
+  constructor(){   
+    super();  
     this.state = { 
       user : null 
     } 
@@ -22,6 +22,7 @@ class App extends Component {
 
   authListner = () => {
     firebase.auth().onAuthStateChanged(user => {
+      console.log(user)
       if(user){
         this.setState({user})
       }else{
@@ -42,17 +43,17 @@ class App extends Component {
   }
 
   //function for  update the Login Status
-  updateSignIn = (val) => {
-     this.setState({ isLogin : val })
+  updateSignIn = (user) => {
+     this.setState({ user })
   } 
 
   render() { 
     return ( 
       <div className="App">
         {
-          !this.state.isLogin ?
+          !this.state.user ?
             <Login updateSignIn={this.updateSignIn}/>
-          : <Landing logOut={this.logOut} />
+          : <Landing logOut={this.logOut} user={this.state.user}/>
         }
       </div>
      );

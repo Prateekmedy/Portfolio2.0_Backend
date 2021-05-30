@@ -3,7 +3,6 @@ import "../Style/HomePage.css";
 import "../Style/Template.css";
 import { Grid, Fab } from '@material-ui/core';
 import ChevronLeftOutlinedIcon from '@material-ui/icons/ChevronLeftOutlined';
-import AddRoundedIcon from '@material-ui/icons/AddRounded';
 import AboutPage from './AboutPage';
 import PortfolioPage from './PortfolioPage';
 import AchievementPage from './AchievementPage';
@@ -69,14 +68,11 @@ class Template extends Component {
                     {(() => {
                         switch(this.props.landingState.chosen){
                             case 1 : 
-                                return <AboutPage AboutData={this.props.AboutData} changePageName={this.changePageName}/>;
-                                break;
+                                return <AboutPage AboutData={this.props.AboutData} changePageName={this.changePageName} user={this.props.user}/>;
                             case 2 : 
-                                return <PortfolioPage PortfolioData={this.props.PortfolioData} changePageName={this.changePageName}/>;
-                                break;
+                                return <PortfolioPage PortfolioData={this.props.PortfolioData} changePageName={this.changePageName} user={this.props.user}/>;
                             case 3 :
-                                return <AchievementPage AchievementsData={this.props.AchievementsData} changePageName={this.changePageName}/>;
-                                break;
+                                return <AchievementPage AchievementsData={this.props.AchievementsData} changePageName={this.changePageName} user={this.props.user}/>;
                             default :
                                 return <div>default</div>;
                         }

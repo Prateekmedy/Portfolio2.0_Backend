@@ -63,11 +63,11 @@ class PortfolioPage extends Component {
         //console.log(newProjectData)
         //console.log(newProjectImages)
         let finalImageArr = []
-        if(operation == 'save'){
+        if(operation === 'save'){
             this.portfolioObj.insertProject(newProjectData, newProjectImages)
-        }else if(operation == 'update'){
+        }else if(operation === 'update'){
 
-            if(newProjectImages != undefined){
+            if(newProjectImages !== undefined){
                 newProjectImages = Object.values(newProjectImages)
             }else{
                 newProjectImages = []
@@ -105,6 +105,7 @@ class PortfolioPage extends Component {
                     currentImages={this.state.currentImages}
                     updateCurrentImages={this.updateCurrentImages}
                     handleDeleteProjectImages={this.handleDeleteProjectImages}
+                    user={this.props.user}
                 /> 
          )
      }
@@ -156,6 +157,7 @@ class PortfolioPage extends Component {
                                         onClick={() => this.handleClickOpen(card.data.name)}
                                         size="small"
                                         className="header_sticky"
+                                        disabled={this.props.user === 'guest' ? true : false}
                                     >
                                         <Delete />
                                     </Fab>
@@ -198,6 +200,7 @@ class PortfolioPage extends Component {
                     aria-label="add" 
                     id="add_new_btn" 
                     onClick={this.triggerProjectForm}
+                    disabled={this.props.user === 'guest' ? true : false}
                 >
                     <AddRoundedIcon />
                 </Fab>

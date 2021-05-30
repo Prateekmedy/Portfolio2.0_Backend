@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { readers } from '../utility/ipfsStore'
-import Collection from '../utility/Collection';
 import Util from '../utility/Util';
 import firebase from '../utility/firebase'
 
@@ -36,7 +35,7 @@ class Portfolio extends Component {
      //method for inserting the project data into the DB
     insertProject = (projectData, imagesData) => {
 
-        if(projectData.name != "" && imagesData != null){
+        if(projectData.name !== "" && imagesData !== null){
             
             
 
@@ -47,7 +46,7 @@ class Portfolio extends Component {
                 let found = false
 
                 previousProjects.map(project => {
-                    if(projectData.name == project.data.name) found = true
+                    if(projectData.name === project.data.name) found = true
                 })
 
                 if(found === true){
@@ -103,7 +102,7 @@ class Portfolio extends Component {
                     readers(images[i])
                     .then(res => {
                         imgs.push(res)
-                        if(operation == 'insert'){
+                        if(operation === 'insert'){
     
                             firestore
                                 .collection('Projects')
@@ -117,7 +116,7 @@ class Portfolio extends Component {
     
                         }
 
-                        if(images.length == imgs.length){
+                        if(images.length === imgs.length){
                             resolve(imgs)
                         }
                         
@@ -138,7 +137,7 @@ class Portfolio extends Component {
 
      //method for updating the project data into the DB
      updateProject = ( projectData, projectID ) => {
-        if(projectData.name != ''){
+        if(projectData.name !== ''){
             firestore
                 .collection('Projects')
                 .doc(projectID)
@@ -232,7 +231,7 @@ class Portfolio extends Component {
             let finalImages = []
 
             previousProjects.map(project => {
-                if(projectID == project.id){
+                if(projectID === project.id){
                     finalImages = project.data.images
                     finalImages.splice(imageNode, 1)
                 }

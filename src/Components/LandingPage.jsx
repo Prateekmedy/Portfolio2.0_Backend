@@ -1,4 +1,4 @@
-import React, { Component, createContext }  from 'react';
+import React, { Component }  from 'react';
 import { Box } from '@material-ui/core';
 import Home from './HomePage';
 import backdropImage from '../asserts/Intersection1.svg';
@@ -35,42 +35,42 @@ class Landing extends Component {
         AboutObj.getPersonalRecord.then(personal => {     
             this.setState({ AboutData : { ...this.state.AboutData, personal}})
         },error => {
-            console.log(error)
+            console.error(error)
         });
 
         //fetching the ContactRecord
         AboutObj.getContactRecord.then(contact => {     
             this.setState({ AboutData : { ...this.state.AboutData, contact} })
         },error => {
-            console.log(error)
+            console.error(error)
         });
 
         //fetching the SocialRecord
         AboutObj.getSocialRecord.then(social => {     
             this.setState({ AboutData : { ...this.state.AboutData, social} })
         },error => {
-            console.log(error)
+            console.error(error)
         });   
         
         //fetching the SkilllsRecord
         AchievementObj.getSkillsRecord.then(skills => {     
             this.setState({ AchievementsData : { ...this.state.AchievementsData, skills} })
         },error => {
-            console.log(error)
+            console.error(error)
         });   
 
         //fetching the CertificatesRecord
         AchievementObj.getCertRecord.then(cert => {     
             this.setState({ AchievementsData : { ...this.state.AchievementsData, cert} })
         },error => {
-            console.log(error)
+            console.error(error)
         });
 
         //fetching the PortfolioRecord
         PortfolioObj.getPortfolioRecord.then(project => {     
             this.setState({ PortfolioData : { ...this.state.PortfolioData, project} })
         },error => {
-            console.log(error)
+            console.error(error)
         });
     }
 
@@ -83,14 +83,14 @@ class Landing extends Component {
     }
 
     render() {
-        console.log(this.state.PortfolioData)
+        // console.log(this.state.PortfolioData)
         return ( 
             <>
                 <Box style={this.backdrop}> 
                     {
                         this.state.chosen ?
-                            <Template  AboutData={this.state.AboutData} AchievementsData={this.state.AchievementsData} PortfolioData={this.state.PortfolioData} landingState={this.state}  back={this.back}/>
-                            : <Home  logOut={this.props.logOut} updateChosen={this.updateChosen} />       
+                            <Template  AboutData={this.state.AboutData} AchievementsData={this.state.AchievementsData} PortfolioData={this.state.PortfolioData} landingState={this.state}  user={this.props.user} back={this.back}/>
+                            : <Home  logOut={this.props.logOut} updateChosen={this.updateChosen} user={this.props.user}/>       
                     }
                 </Box>
             </>

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import firebase from '../utility/firebase'
 import {Grid, TextField, Button, Link} from '@material-ui/core';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../Style/loginPage.css'
 
 class Login extends Component {
@@ -10,16 +12,30 @@ class Login extends Component {
      }
 
      //function for Login the user inside the application
-     login = () => {
-         let { username, password } = this.state
-
-         firebase.auth().signInWithEmailAndPassword(username, password).then(user => {
+     login = (user = '') => {
+        
+        if(user){
             this.props.updateSignIn(user)
-            console.log(user)
-            console.log(user+" is successfully loggined")
-         }).catch(err => {
-             console.error("Auth "+ err)
-         })    
+        }else{
+            let { username, password } = this.state
+
+            firebase.auth().signInWithEmailAndPassword(username, password).then(user => {
+                this.props.updateSignIn(user)
+                console.log(user+" is successfully loggined")
+            }).catch(err => {
+                console.log("Auth "+ err)
+                toast.error("Auth "+ err, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    });
+            })  
+        }
+        
      }
 
      //function for the SigningUp the new User
@@ -36,7 +52,7 @@ class Login extends Component {
      }
 
      resetPassword = () => {
-        let { username, password } = this.state
+        let { username } = this.state
 
          firebase.auth().sendPasswordResetEmail(username).then(user => {
             alert("Password Reset link is sended to the email "+username);
@@ -96,31 +112,40 @@ class Login extends Component {
                                 variant="outlined"
                                 onChange={evt => this.updatePassword(evt)}
                             />
-                            <Button
-                                item="true"
-                                sm={12}
-                                variant="contained"
-                                color="primary"
-                                className="spacer"
-                                id="login_btn"
-                                onClick={this.login}
+                            <Grid 
+                                item
+                                sm={6}
+                                container 
+                                direction="row" 
+                                style={{maxHeight:'50px'}}
                             >
-                                Login
-                            </Button>
-                            <Link href="#" onClick={this.resetPassword}>
+                                <Button
+                                    item="true"
+                                    sm={6}
+                                    variant="contained"
+                                    color="primary"
+                                    className="primary-btn"
+                                    id="login_btn"
+                                    onClick={() => this.login('')}
+                                >
+                                    Login
+                                </Button>
+                                <Button
+                                    item="true"
+                                    sm={6}
+                                    variant="outlined"
+                                    color="primary"
+                                    className="second-btn"
+                                    id="guest_login_btn"
+                                    onClick={() => this.login('guest')}
+                                >
+                                    Guest
+                                </Button>
+                            </Grid>
+                            <Link href="#" item="true" sm={6} onClick={this.resetPassword}>
                                 Reset Password
                             </Link>
-                            {/* <Button
-                                item="true"
-                                sm={12}
-                                variant="contained"
-                                color="primary"
-                                className="spacer"
-                                id="login_btn"
-                                onClick={this.signUp}
-                            >
-                                SignUp
-                            </Button> */}
+                            
                             {/* <button onClick={this.sessionChecker}>Session Check</button>
                             <button onClick={this.logoutUser}>Logout</button>
                             <button onClick={this.deleteUser}>Delete User</button> */}
@@ -130,6 +155,17 @@ class Login extends Component {
                         <div id="right_login_pattern" className="side_pattern"></div>
                     </Grid>
                 </Grid>
+                <ToastContainer 
+                    position="top-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    />
             </>
          );
     }

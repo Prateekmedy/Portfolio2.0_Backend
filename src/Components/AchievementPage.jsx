@@ -126,6 +126,7 @@ class AchievementPage extends Component {
                             color="primary" 
                             id="add_skill_btn"   
                             onClick={this.addSkill}
+                            disabled={this.props.user === 'guest' ? true : false}
                         >
                             <Done />
                         </Button>
@@ -136,6 +137,7 @@ class AchievementPage extends Component {
                                 onClick={this.handleSkillDelete}
                             size="small"
                             className="header_sticky"
+                            disabled={this.props.user === 'guest' ? true : false}
                         >
                             <Delete />
                         </Fab>
@@ -156,6 +158,7 @@ class AchievementPage extends Component {
                             onClick={this.handleCertDelete}
                             size="small"
                             className="header_sticky"
+                            disabled={this.props.user === 'guest' ? true : false}
                         >
                             <Delete />
                         </Fab>
@@ -163,7 +166,7 @@ class AchievementPage extends Component {
                     <Grid className="achievementFormRow">
                         <Grid className="image_container" >
                             <div className="imagePreview_div">
-                                <img src='' className="thumbnail_image" id="certImagePreview"/>
+                                <img alt='' src='' className="thumbnail_image" id="certImagePreview"/>
                             </div>
                             <input
                                 accept="image/*"
@@ -207,6 +210,7 @@ class AchievementPage extends Component {
                             color="primary" 
                             className="stepper_btn"   
                             onClick={this.saveAchievement}
+                            disabled={this.props.user === 'guest' ? true : false}
                         >
                             Save
                         </Button>            

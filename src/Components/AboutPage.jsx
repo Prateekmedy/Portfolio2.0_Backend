@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from 'react';
+import React, { Component } from 'react';
 import About from "../CRUD/About";
 import { Grid, Button, Input, TextField, Select, MenuItem, IconButton } from '@material-ui/core';
 import '../Style/AboutPage.css'
@@ -11,7 +11,8 @@ class AboutPage extends Component {
 
     constructor(props){
         super(props)
-        this.aboutObj = new About(this.props);    
+        this.aboutObj = new About(this.props); 
+        console.log(props.user)   
     }
 
     state = { 
@@ -114,24 +115,24 @@ class AboutPage extends Component {
             <>
                 {/* Header */}
                 <Grid container justify="center" alignItems="center" className="stepper_header">
-                    <Grid item sm={6} container justify="center" alignItems="center" className={this.state.activeStep == 0 ? "stepper_step" : "stepper_step_disable"}>
-                        <FilterTiltShift item="true" sm={2} className={this.state.activeStep == 0 ? "stepperStep_icon" : "stepperStep_icon_disable"}/>
+                    <Grid item sm={6} container justify="center" alignItems="center" className={this.state.activeStep === 0 ? "stepper_step" : "stepper_step_disable"}>
+                        <FilterTiltShift item="true" sm={2} className={this.state.activeStep === 0 ? "stepperStep_icon" : "stepperStep_icon_disable"}/>
                         <div item="true" sm={10} className="step_label">Personal Details</div>
                     </Grid>
-                    <Grid item sm={6} container justify="center" alignItems="center" className={this.state.activeStep == 1 ? "stepper_step" : "stepper_step_disable"}>
-                        <FilterTiltShift className={this.state.activeStep == 1 ? "stepperStep_icon" : "stepperStep_icon_disable"}/>
+                    <Grid item sm={6} container justify="center" alignItems="center" className={this.state.activeStep === 1 ? "stepper_step" : "stepper_step_disable"}>
+                        <FilterTiltShift className={this.state.activeStep === 1 ? "stepperStep_icon" : "stepperStep_icon_disable"}/>
                         <div item="true" sm={12} className="step_label">Contact Details</div>
                     </Grid>
                 </Grid>
                 {/* Body or section of content */}
                 <Grid container justif="center" alignItems="center" className="stepper_body"> 
                     {
-                        this.state.activeStep == 0 ?
+                        this.state.activeStep === 0 ?
                         // Personal Detials Section
                         <Grid item sm={12} container justify="center" alignItems="center" className="stepper_body_container">
                             <Grid item sm={5} container justify="center" alignItems="center" className="dp_container">
                                 <div className="dp">
-                                    <img src={this.state.imagePerview} className="thumbnail_image" id="aboutImagePreview"/>
+                                    <img alt='' src={this.state.imagePerview} className="thumbnail_image" id="aboutImagePreview"/>
                                 </div>
                                 <input
                                     accept="image/*"
@@ -264,7 +265,7 @@ class AboutPage extends Component {
                 {/* footer */}
                 <Grid container justify="flex-end" alignItems="center" className="stepper_footer">  
                     {
-                        this.state.activeStep == 0 ?
+                        this.state.activeStep === 0 ?
                         <Button
                             item="true" 
                             sm={6}
@@ -294,6 +295,7 @@ class AboutPage extends Component {
                             color="primary" 
                             className="stepper_btn" 
                             onClick={this.saveChanges}  
+                            disabled={this.props.user === 'guest' ? true : false}
                         >
                             Save
                         </Button>
